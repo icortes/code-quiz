@@ -23,8 +23,8 @@ section{
     display:flex;
     justify-content: center;
     flex-direction: column;
-    align-content: center;
     text-align: center;
+    align-items: center;
     width: 600px;
     height: 250px;
     border: 2px dashed black;
@@ -37,4 +37,6 @@ section{
     display: none;
 }
 
-
+#playGameBtn{
+    width: 100px;
+}

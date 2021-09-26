@@ -43,7 +43,12 @@ class Question {
     getQuestion() {
         return this.myQuestion;
     }
-
+    getOptions() {
+        return [this.op1, this.op2, this.op3, this.op4];
+    }
+    getAnswer() {
+        return this.correctAns;
+    }
 }
 
 
@@ -53,10 +58,26 @@ function loadGame(gameBlock) {
     //make gameBlock visible
     gameBlock.setAttribute("data-state", "visible");
     gameBlock.setAttribute("style", "display: flex");
+    console.log(gameBlock);
 
     //create questions
     const question1 = new Question("Which one is not a data type?", "number", "string", "boolean", "null", "null");
-    console.log(gameBlock);
+    const question2 = new Question("How can you add a comment in a JavaScript?", "//This is a comment", "'This is a comment", "<!--This is a comment-->", "#This is a comment", "//This is a comment");
+    const question3 = new Question("The symbols + - * and / are:", "operators", "expressions", "comparison operators", "none of the above", "operators");
 
- 
+    //start timer
+    var timeEl = document.getElementById("timer");
+    var secondsLeft = 61;
+    console.log(timeEl);
+
+    var timerInterval = setInterval(function(){
+        secondsLeft--;
+        timeEl.textContent = secondsLeft;
+
+        if(secondsLeft === 0){
+            clearInterval(timerInterval);
+            //send to gameOver
+        }
+    }, 1000);
+
 }

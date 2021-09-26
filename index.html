@@ -12,7 +12,7 @@
 <body>
     <header>
         <a id="highscore" href="./assets/html/highscores.html">View Highscores</a>
-        <a id="timer">timer here</a>
+        <p>Time: <a id="timer">0</a></p>
     </header>
     <main class="container">
         <section id="startMenu" data-state="visible">
@@ -23,7 +23,8 @@
             <button id="playGameBtn">Play!</button>
         </section>
         <section id="gameBlock" data-state="hidden">
-
+            <h3 id="question"></h3>
+            <ul id="options"></ul>
         </section>
     </main>
     <footer>
