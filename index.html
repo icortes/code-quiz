@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,17 +8,28 @@
     <link rel="stylesheet" href="./assets/css/style.css">
     <title>Code Quiz | Test Your Knowledge!</title>
 </head>
+
 <body>
     <header>
         <a id="highscore" href="./assets/html/highscores.html">View Highscores</a>
         <a id="timer">timer here</a>
     </header>
-    <main>
-        <a id="content"></a>
+    <main class="container">
+        <section id="startMenu" data-state="visible">
+            <h2>Welcome to the Coding Challenge Quiz!</h2>
+            <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua.
+            </h3>
+            <button id="playGameBtn">Play!</button>
+        </section>
+        <section id="gameBlock" data-state="hidden">
+
+        </section>
     </main>
     <footer>
-        
+
     </footer>
-    <script src = "assets/js/script.js"></script>
+    <script src="assets/js/script.js"></script>
 </body>
+
 </html>
