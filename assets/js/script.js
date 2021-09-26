@@ -43,20 +43,23 @@ var questionCounter = 0;
 
 //check if play button is clicked
 playButton.addEventListener("click", function (event) {
-    //load the game
-    loadGame();
     var element = event.target;
     console.log(element);
 
     //randomize questionArray
     arrayRandomize(questionArray);
+    console.log(questionArray);
 
     //randomize questionRandomIndex
     arrayRandomize(questionRandomIndex);
+    console.log(questionRandomIndex);
 
     //randomly sort an array if indexes to make selection random every time
     arrayRandomize(randIndexes);
     console.log(randIndexes);
+
+    //load the game
+    loadGame();
 
     //get parent and parent data-state
     var parent = element.parentNode;
@@ -136,21 +139,18 @@ function addClickEventTo(element, correctAns) {
 
 //function to remove list items from the gameBlock for next question
 function clearGameBlock() {
-    //get first child of options
-    var child = listEl.firstChild;
     //will execute if children still exist
-    while (child != null) {
+    while (listEl.firstChild) {
         //delete child from parent
-        listEl.removeChild(child);
-        //grab new child, null if child does not exist
-        child = listEl.firstChild;
-        console.log("New Child" + child);
+        listEl.removeChild(listEl.firstChild);
+        //back to while loop, grab new child, null if child does not exist
     }
 }
 
 
 
 var displayQuestion;
+var liList;
 //get question element from DOM
 var questEl = document.getElementById("question");
 console.log(questEl);
@@ -158,7 +158,7 @@ console.log(questEl);
 //display new question to the gameBlock
 function newQuestion() {
     //pick a question from questionRandomIndex[questionCounter] that's already been randomized
-    displayQuestion = questionArray[questionRandomIndex[questionCounter]]
+    displayQuestion = questionArray[questionRandomIndex[questionCounter]];
     console.log(displayQuestion);
     //place question from displayQuestion
     questEl.textContent = displayQuestion.getQuestion;
@@ -172,13 +172,16 @@ function newQuestion() {
     var li3 = document.createElement("li");
     var li4 = document.createElement("li");
 
-    //assign questions into each list item
-    li1.textContent = displayQuestion.getOptions[randIndexes[0]];
-    li2.textContent = displayQuestion.getOptions[randIndexes[1]];
-    li3.textContent = displayQuestion.getOptions[randIndexes[2]];
-    li4.textContent = displayQuestion.getOptions[randIndexes[3]];
+    console.log(displayQuestion.getOptions);
+    liList = displayQuestion.getOptions;
 
-    console.log(displayQuestion.getOptions[randIndexes[0]]);
+    //assign questions into each list item
+    li1.textContent = liList[0];
+    li2.textContent = liList[1];
+    li3.textContent = liList[2];
+    li4.textContent = liList[3];
+
+    console.log(displayQuestion.getAnswer);
 
     //add li elements to unordered list
     listEl.appendChild(li1);
