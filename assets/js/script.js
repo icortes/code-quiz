@@ -5,6 +5,7 @@ var playButton = gameContainers.querySelector("#playGameBtn");
 var gameBlock = gameContainers.querySelector("#gameBlock");
 var startMenu = document.getElementById("startMenu");
 var validation = document.getElementById("validate");
+var listEl = document.getElementById("options");
 
 //create class with question, 4 options, and correct answer
 class Question {
@@ -37,7 +38,7 @@ const question3 = new Question("The symbols + - * and / are:", "operators", "exp
 //put every question object into an array
 var questionArray = [question1, question2, question3];
 var questionRandomIndex = [0, 1, 2];
-
+var randIndexes = [0, 1, 2, 3];
 var questionCounter = 0;
 
 //check if play button is clicked
@@ -52,6 +53,10 @@ playButton.addEventListener("click", function (event) {
 
     //randomize questionRandomIndex
     arrayRandomize(questionRandomIndex);
+
+    //randomly sort an array if indexes to make selection random every time
+    arrayRandomize(randIndexes);
+    console.log(randIndexes);
 
     //get parent and parent data-state
     var parent = element.parentNode;
@@ -111,55 +116,61 @@ function loadGame() {
 function addClickEventTo(element, correctAns) {
     //add click event listener to element
     element.addEventListener("click", function () {
+
         if (element.textContent === correctAns) {
             validation.textContent = "Correct!";
-            if (questionCounter > questionRandomIndex.length) {
-                newQuestion();
+            if (questionCounter < questionRandomIndex.length) {
+                clearGameBlock();
                 questionCounter++;
+                newQuestion();
                 console.log(questionCounter);
             } else {
                 //gameOver();
             }
-            clearGameBlock();
-        } else {
+        } 
+        else {
             validation.textContent = "Wrong!";
         }
     });
 }
 
-//function to clear the gameBlock for next question
-function clearGameBlock(){
-    
+//function to remove list items from the gameBlock for next question
+function clearGameBlock() {
+    //get first child of options
+    var child = listEl.firstChild;
+    //will execute if children still exist
+    while (child != null) {
+        //delete child from parent
+        listEl.removeChild(child);
+        //grab new child, null if child does not exist
+        child = listEl.firstChild;
+        console.log("New Child" + child);
+    }
 }
 
 
-//pick a question from questionRandomIndex[questionCounter] that's already been randomized
-var displayQuestion = questionArray[questionRandomIndex[questionCounter]];
- //get question element from DOM
- var questEl = document.getElementById("question");
- console.log(questEl);
+
+var displayQuestion;
+//get question element from DOM
+var questEl = document.getElementById("question");
+console.log(questEl);
 
 //display new question to the gameBlock
 function newQuestion() {
+    //pick a question from questionRandomIndex[questionCounter] that's already been randomized
+    displayQuestion = questionArray[questionRandomIndex[questionCounter]]
     console.log(displayQuestion);
-
     //place question from displayQuestion
     questEl.textContent = displayQuestion.getQuestion;
 
     //get unordered list from the gameBlock DOM
-    var listEl = document.getElementById("options");
+    listEl = document.getElementById("options");
 
     //create li elements for the questions
     var li1 = document.createElement("li");
     var li2 = document.createElement("li");
     var li3 = document.createElement("li");
     var li4 = document.createElement("li");
-
-
-    //randomly sort an array if indexes to make selection random every time
-    randIndexes = [0, 1, 2, 3];
-    arrayRandomize(randIndexes);
-    console.log(randIndexes);
 
     //assign questions into each list item
     li1.textContent = displayQuestion.getOptions[randIndexes[0]];
