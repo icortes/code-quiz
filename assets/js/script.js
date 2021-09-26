@@ -4,11 +4,11 @@ var gameContainers = document.querySelector(".container");
 var playButton = gameContainers.querySelector("#playGameBtn");
 
 //check if play button is clicked
-playButton.addEventListener("click", function(event){
-    
+playButton.addEventListener("click", function (event) {
+
     var element = event.target;
     console.log(element);
-    
+
     //get parent and parent data-state
     var parent = element.parentNode;
     var parentState = element.parentNode.getAttribute("data-state");
@@ -16,10 +16,15 @@ playButton.addEventListener("click", function(event){
     console.log(parentState, typeof parentState);
 
     // if the start menu is visible hide it
-    if(parentState === "visible"){
-
+    if (parentState === "visible") {
         parent.setAttribute("data-state", "hidden");
         parent.setAttribute("style", "display: none");
+
+        //store gameBlock
+        var gameBlock = gameContainers.querySelector("#gameBlock");
+        console.log(gameBlock);
+        //pass gameBlock to start game
+        loadGame(gameBlock);
     }
 });
 
@@ -34,9 +39,24 @@ class Question {
         this.op4 = option4;
         this.correctAns = answer;
     }
+
+    getQuestion() {
+        return this.myQuestion;
+    }
+
 }
 
-//load game
-function loadGame() {
 
+//load game
+function loadGame(gameBlock) {
+
+    //make gameBlock visible
+    gameBlock.setAttribute("data-state", "visible");
+    gameBlock.setAttribute("style", "display: flex");
+
+    //create questions
+    const question1 = new Question("Which one is not a data type?", "number", "string", "boolean", "null", "null");
+    console.log(gameBlock);
+
+ 
 }
