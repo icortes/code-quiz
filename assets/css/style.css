@@ -16,7 +16,8 @@ header a{
 
 main{
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 section{
@@ -56,5 +57,12 @@ section{
 
 #playGameBtn{
     width: 100px;
+}
+
+#gameOver{
+    display: none;
+    align-items: initial;
+    text-align: initial;
+    padding-left: 20px;
 }
 

@@ -4,6 +4,7 @@ var gameContainers = document.querySelector(".container");
 var playButton = gameContainers.querySelector("#playGameBtn");
 var gameBlock = gameContainers.querySelector("#gameBlock");
 var startMenu = document.getElementById("startMenu");
+var gameOver = document.getElementById("gameOver");
 var validation = document.getElementById("validate");
 var listEl = document.getElementById("options");
 
@@ -40,6 +41,9 @@ var questionArray = [question1, question2, question3];
 var questionRandomIndex = [0, 1, 2];
 var randIndexes = [0, 1, 2, 3];
 var questionCounter = 0;
+//grab timer element from DOM
+var timeEl = document.getElementById("timer");
+var secondsLeft;
 
 //check if play button is clicked
 playButton.addEventListener("click", function (event) {
@@ -74,12 +78,22 @@ playButton.addEventListener("click", function (event) {
 
 //load start menu
 function loadStart() {
-    gameBlock.setAttribute("data-state", "hidden");
-    gameBlock.setAttribute("style", "display: none");
+    gameOver.setAttribute("data-state", "hidden");
+    gameOver.setAttribute("style", "display: none");
+
 
     startMenu.setAttribute("data-state", "visible");
     startMenu.setAttribute("style", "display: flex");
 
+}
+
+function loadGameOver(){
+    
+    gameBlock.setAttribute("data-state", "hidden");
+    gameBlock.setAttribute("style", "display: none");
+
+    gameOver.setAttribute("data-state", "visible");
+    gameOver.setAttribute("style", "display: flex");
 }
 
 
@@ -91,24 +105,22 @@ function loadGame() {
     gameBlock.setAttribute("style", "display: flex");
     console.log(gameBlock);
 
-    //grab timer element from DOM
-    var timeEl = document.getElementById("timer");
-    var secondsLeft = 61;
+    secondsLeft = 61;
     console.log(timeEl);
 
     //start timer countdown
     var timerInterval = setInterval(function () {
         secondsLeft--;
 
-        if (secondsLeft === 0) {
+        //when secondsLeft reaches below 0
+        if (secondsLeft < 0) {
+            secondsLeft = 0;
+            validation.textContent = "";
             clearInterval(timerInterval);
             //send to gameOver
+            loadGameOver();
         }
 
-        //display question and options
-        else {
-
-        }
         timeEl.textContent = secondsLeft;
     }, 1000);
 
@@ -128,11 +140,12 @@ function addClickEventTo(element, correctAns) {
                 newQuestion();
                 console.log(questionCounter);
             } else {
-                //gameOver();
+                gameOver();
             }
-        } 
+        } //
         else {
-            validation.textContent = "Wrong!";
+            validation.textContent = "Wrong! -10 seconds!";
+            secondsLeft -= 10;
         }
     });
 }

@@ -15,6 +15,7 @@
         <p>Time: <a id="timer">0</a></p>
     </header>
     <main class="container">
+        
         <section id="startMenu" data-state="visible">
             <h2>Welcome to the Coding Challenge Quiz!</h2>
             <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
@@ -22,9 +23,20 @@
             </h3>
             <button id="playGameBtn">Play!</button>
         </section>
+       
         <section id="gameBlock" data-state="hidden">
             <h3 id="question"></h3>
             <ol id="options"></ol>
+        </section>
+        
+        <section id="gameOver" data-state="hidden">
+            <h2>All Done!</h2>
+            <h3>Your final score is: <p id="totalScore"></p>
+            </h3>
+            <div><label for="initials">Enter initials:</label>
+                <input type="text" id="initials" name="initials">
+                <input type="submit" value="Submit">
+            </div>
         </section>
         <h3 id="validate"></h3>
     </main>
