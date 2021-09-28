@@ -31,6 +31,21 @@ class Question {
     }
 }
 
+class UserScore {
+    constructor(initial,score){
+        this.init = initial;
+        this.scr = score;
+    }
+
+    get getInitial(){
+        return this.init;
+    }
+
+    get getScore(){
+        return this.scr;
+    }
+}
+
 //create questions
 const question1 = new Question("Which one is not a data type?", "number", "string", "boolean", "null", "null");
 const question2 = new Question("How can you add a comment in a JavaScript?", "//This is a comment", "'This is a comment", "<!--This is a comment-->", "#This is a comment", "//This is a comment");
@@ -44,6 +59,8 @@ var questionCounter = 0;
 //grab timer element from DOM
 var timeEl = document.getElementById("timer");
 var secondsLeft;
+//total score variable
+var totalScore = 0;
 
 //check if play button is clicked
 playButton.addEventListener("click", function (event) {
@@ -88,12 +105,33 @@ function loadStart() {
 }
 
 function loadGameOver(){
-    
+    //hide game block
     gameBlock.setAttribute("data-state", "hidden");
     gameBlock.setAttribute("style", "display: none");
-
+    //show game over screen
     gameOver.setAttribute("data-state", "visible");
     gameOver.setAttribute("style", "display: flex");
+
+    var submitBtn = document.getElementById("submitBtn");
+
+    //to prevent negative score, change totalScore to zero if < 0
+    if(totalScore < 0){
+        totalScore = 0;
+    }
+    
+    //add click event listener to submit button
+    submitBtn.addEventListener("click", function(event){
+        event.preventDefault();
+        //grab the value in the text box
+        var initials = document.getElementById("initials").value.trim();
+        console.log(initials);
+        //store the value and initials in an object
+        var user = new UserScore(initials, totalScore);
+        //store user in local storage using JSON
+        localStorage.setItem("users", JSON.stringify(user));
+        //go to the highscores html page
+        window.location.href = "assets/html/highscores.html";
+    });
 }
 
 
@@ -112,7 +150,7 @@ function loadGame() {
     var timerInterval = setInterval(function () {
         secondsLeft--;
 
-        //when secondsLeft reaches below 0
+        //when secondsLeft reaches 0 or below
         if (secondsLeft < 0) {
             secondsLeft = 0;
             validation.textContent = "";
@@ -131,9 +169,12 @@ function loadGame() {
 function addClickEventTo(element, correctAns) {
     //add click event listener to element
     element.addEventListener("click", function () {
-
+        //if item clicked is equal to the correct answer
         if (element.textContent === correctAns) {
+            //add 10 points for correct answer
+            totalScore += 10;
             validation.textContent = "Correct!";
+            //
             if (questionCounter < questionRandomIndex.length) {
                 clearGameBlock();
                 questionCounter++;
@@ -145,6 +186,7 @@ function addClickEventTo(element, correctAns) {
         } //
         else {
             validation.textContent = "Wrong! -10 seconds!";
+            totalScore -= 5;
             secondsLeft -= 10;
         }
     });
