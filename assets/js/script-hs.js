@@ -1,5 +1,7 @@
 //get highscore list
 var hsListEl = document.getElementById("hs-list");
+//get go back button element
+var goBack = document.getElementById("go-back");
 
 //function to show highscores
 function showHighScores() {
@@ -30,3 +32,9 @@ function showHighScores() {
 }
 
 showHighScores();
+
+//add click event listener to go back button
+goBack.addEventListener("click", function(){
+    //goes back to previous page
+    window.history.back();
+});
