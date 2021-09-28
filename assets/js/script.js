@@ -32,16 +32,16 @@ class Question {
 }
 
 class UserScore {
-    constructor(initial,score){
+    constructor(initial, score) {
         this.init = initial;
         this.scr = score;
     }
 
-    get getInitial(){
+    get getInitial() {
         return this.init;
     }
 
-    get getScore(){
+    get getScore() {
         return this.scr;
     }
 }
@@ -50,10 +50,17 @@ class UserScore {
 const question1 = new Question("Which one is not a data type?", "number", "string", "boolean", "null", "null");
 const question2 = new Question("How can you add a comment in a JavaScript?", "//This is a comment", "'This is a comment", "<!--This is a comment-->", "#This is a comment", "//This is a comment");
 const question3 = new Question("The symbols + - * and / are:", "operators", "expressions", "comparison operators", "none of these", "operators");
+const question4 = new Question("How do you write \"Hello World\" in an alert box?", "alert(\"Hello Word\")", "msgBox(\"Hello Word\")", "alertBox=\"Hello Word\"", "alertBox(\"Hello Word\")", "alert(\"Hello Word\")");
+const question5 = new Question("How do you create a function?", "function:myFunction()", "function=myFunction()", "function myFunction()", "myFunction():function", "function myFunction()");
+const question6 = new Question("How do you write a conditional statement for executing some statements only if \"i\" is equal to 5?", "if i==5 then", "if (i==5)", "if i=5 then", "if i=5", "if (i==5)");
+const question7 = new Question("In JavaScript, the following loop will execute ________ times. for (x=1; x<11; x++)", "9", "10", "11", "cannot tell from this portion of the script", "10");
+const question8 = new Question("Which of the following is a logical operator?", "|", "&&", "%", "/", "&&");
+const question9 = new Question("Alert(message), close() and reset() are JavaScript:", "Objects", "Methods", "Properties", "Commands", "Methods");
+const question10 = new Question("Which HTML tag is used to define an embedded style sheet?", "<script>", "<style>", "<css>", "<stylesheet>", "<style>");
 
 //put every question object into an array
-var questionArray = [question1, question2, question3];
-var questionRandomIndex = [0, 1, 2];
+var questionArray = [question1, question2, question3, question4,question5,question6,question7,question8,question9,question10];
+var questionRandomIndex = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 var randIndexes = [0, 1, 2, 3];
 var questionCounter = 0;
 //grab timer element from DOM
@@ -61,6 +68,8 @@ var timeEl = document.getElementById("timer");
 var secondsLeft;
 //total score variable
 var totalScore = 0;
+//timer interval
+var timerInterval;
 
 //check if play button is clicked
 playButton.addEventListener("click", function (event) {
@@ -105,7 +114,7 @@ function loadStart() {
 }
 
 //gameOver
-function loadGameOver(){
+function loadGameOver() {
     //hide game block
     gameBlock.setAttribute("data-state", "hidden");
     gameBlock.setAttribute("style", "display: none");
@@ -116,12 +125,16 @@ function loadGameOver(){
     var submitBtn = document.getElementById("submitBtn");
 
     //to prevent negative score, change totalScore to zero if < 0
-    if(totalScore < 0){
+    if (totalScore < 0) {
         totalScore = 0;
     }
-    
+
+    //display total score to user
+    var totalScoreEl = document.getElementById("totalScore");
+    totalScoreEl.textContent = " " + totalScore;
+
     //add click event listener to submit button
-    submitBtn.addEventListener("click", function(event){
+    submitBtn.addEventListener("click", function (event) {
         event.preventDefault();
         //grab the value in the text box
         var initials = document.getElementById("initials").value.trim();
@@ -130,21 +143,21 @@ function loadGameOver(){
         var storedUsersArr = JSON.parse(localStorage.getItem("users"));
         //make array to copy stored users to it
         var usersArr = [];
-         //store the value and initials in an object
+        //store the value and initials in an object
         var user = new UserScore(initials, totalScore);
         //store the user in the array
         console.log(storedUsersArr);
         //if the local storage has data
-       if(storedUsersArr !== null){
+        if (storedUsersArr !== null) {
             //copy the local storage array to the usersArr
             usersArr = storedUsersArr;
             //push the user object to the array
             usersArr.push(user);
-       }
-       //if it's empty put the object in index 0 of the usersArr
-       else{
-           usersArr = [user];
-       }
+        }
+        //if it's empty put the object in index 0 of the usersArr
+        else {
+            usersArr = [user];
+        }
         //store user in local storage using JSON
         localStorage.setItem("users", JSON.stringify(usersArr));
         //go to the highscores html page
@@ -165,7 +178,7 @@ function loadGame() {
     console.log(timeEl);
 
     //start timer countdown
-    var timerInterval = setInterval(function () {
+    timerInterval = setInterval(function () {
         secondsLeft--;
 
         //when secondsLeft reaches 0 or below
@@ -192,14 +205,16 @@ function addClickEventTo(element, correctAns) {
             //add 10 points for correct answer
             totalScore += 10;
             validation.textContent = "Correct!";
-            //
-            if (questionCounter < questionRandomIndex.length) {
+            console.log("question random index: " + questionRandomIndex.length)
+            if (questionCounter < questionRandomIndex.length - 1) {
                 clearGameBlock();
                 questionCounter++;
                 newQuestion();
+                arrayRandomize(randIndexes);
                 console.log(questionCounter);
             } else {
-                gameOver();
+                loadGameOver();
+                clearInterval(timerInterval);
             }
         } //
         else {
@@ -248,11 +263,11 @@ function newQuestion() {
     console.log(displayQuestion.getOptions);
     liList = displayQuestion.getOptions;
 
-    //assign questions into each list item
-    li1.textContent = liList[0];
-    li2.textContent = liList[1];
-    li3.textContent = liList[2];
-    li4.textContent = liList[3];
+    //assign questions into each list item randomly
+    li1.textContent = liList[randIndexes[0]];
+    li2.textContent = liList[randIndexes[1]];
+    li3.textContent = liList[randIndexes[2]];
+    li4.textContent = liList[randIndexes[3]];
 
     console.log(displayQuestion.getAnswer);
 

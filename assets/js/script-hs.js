@@ -22,8 +22,6 @@ function showHighScores() {
             var li = document.createElement("li");
             //add text to li element
             li.textContent = item.init + " scored " + item.scr;
-            //add attribute to be used to delete item
-            li.setAttribute("data-i", i);
             console.log(li);
             //append li to hsListEl
             hsListEl.appendChild(li);

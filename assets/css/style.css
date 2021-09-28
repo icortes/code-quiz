@@ -1,17 +1,24 @@
 body{
     font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
 }
 
 header{
     display: flex;
     justify-content: space-between;
-}
-header a{
-    
+    font-size: x-large;
+    padding: 10px 20px;
+    background-color: rgba(0, 0, 255, .4);
 }
 
-#highscore{
-    
+header a,
+header a:visited{
+    text-decoration: none;
+    color: black;
+}
+
+p{
+    margin: 0;
 }
 
 main{
@@ -42,10 +49,13 @@ section{
 }
 
 #gameBlock li {
-    border: 1px solid rgba(0, 0, 255, .2);
+    border: 1px solid rgba(0, 0, 255, .5);
     border-radius: 2px;
     width: fit-content;
+    min-width: 30px;
     margin-bottom: 5px;
+    padding: 3px 3px;
+    text-align: center;
 }
 
 #gameBlock li:hover {
@@ -64,5 +74,15 @@ section{
     align-items: initial;
     text-align: initial;
     padding-left: 20px;
+}
+
+#hs-list{
+    background-color: rgba(0, 0, 255, .2);
+    min-width: 300px;
+}
+
+#hs-list li {
+    padding: 5px 0px;
+    font-weight: bold;
 }
 
