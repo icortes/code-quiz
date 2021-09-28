@@ -26,7 +26,7 @@ function showHighScores() {
             //append li to hsListEl
             hsListEl.appendChild(li);
         }
-    } 
+    }
     //if users doesn't have items exit function
     else {
         return;
@@ -36,18 +36,18 @@ function showHighScores() {
 showHighScores();
 
 //add click event listener to go back button
-goBack.addEventListener("click", function(){
+goBack.addEventListener("click", function () {
     //goes back to previous page
     window.history.back();
 });
 
 //add click event on clear highscores to delete them
-clearBtn.addEventListener("click", function(){
+clearBtn.addEventListener("click", function () {
     console.log(hsListEl);
     //check if hsListEl has items, if it does continue to delete
-    if(hsListEl !== null){
+    if (hsListEl !== null) {
         //while loop to delete all items
-        while(hsListEl.lastElementChild){
+        while (hsListEl.lastElementChild) {
             //delete all children
             hsListEl.removeChild(hsListEl.lastElementChild);
         }

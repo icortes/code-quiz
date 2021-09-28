@@ -59,7 +59,7 @@ const question9 = new Question("Alert(message), close() and reset() are JavaScri
 const question10 = new Question("Which HTML tag is used to define an embedded style sheet?", "<script>", "<style>", "<css>", "<stylesheet>", "<style>");
 
 //put every question object into an array
-var questionArray = [question1, question2, question3, question4,question5,question6,question7,question8,question9,question10];
+var questionArray = [question1, question2, question3, question4, question5, question6, question7, question8, question9, question10];
 var questionRandomIndex = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 var randIndexes = [0, 1, 2, 3];
 var questionCounter = 0;
