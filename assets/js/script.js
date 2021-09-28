@@ -104,6 +104,7 @@ function loadStart() {
 
 }
 
+//gameOver
 function loadGameOver(){
     //hide game block
     gameBlock.setAttribute("data-state", "hidden");
@@ -125,10 +126,27 @@ function loadGameOver(){
         //grab the value in the text box
         var initials = document.getElementById("initials").value.trim();
         console.log(initials);
-        //store the value and initials in an object
+        //grab array of users from local storage
+        var storedUsersArr = JSON.parse(localStorage.getItem("users"));
+        //make array to copy stored users to it
+        var usersArr = [];
+         //store the value and initials in an object
         var user = new UserScore(initials, totalScore);
+        //store the user in the array
+        console.log(storedUsersArr);
+        //if the local storage has data
+       if(storedUsersArr !== null){
+            //copy the local storage array to the usersArr
+            usersArr = storedUsersArr;
+            //push the user object to the array
+            usersArr.push(user);
+       }
+       //if it's empty put the object in index 0 of the usersArr
+       else{
+           usersArr = [user];
+       }
         //store user in local storage using JSON
-        localStorage.setItem("users", JSON.stringify(user));
+        localStorage.setItem("users", JSON.stringify(usersArr));
         //go to the highscores html page
         window.location.href = "assets/html/highscores.html";
     });
