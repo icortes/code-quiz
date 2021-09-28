@@ -2,6 +2,8 @@
 var hsListEl = document.getElementById("hs-list");
 //get go back button element
 var goBack = document.getElementById("go-back");
+//get clear highscores element
+var clearBtn = document.getElementById("clear-hs");
 
 //function to show highscores
 function showHighScores() {
@@ -20,6 +22,8 @@ function showHighScores() {
             var li = document.createElement("li");
             //add text to li element
             li.textContent = item.init + " scored " + item.scr;
+            //add attribute to be used to delete item
+            li.setAttribute("data-i", i);
             console.log(li);
             //append li to hsListEl
             hsListEl.appendChild(li);
@@ -37,4 +41,23 @@ showHighScores();
 goBack.addEventListener("click", function(){
     //goes back to previous page
     window.history.back();
+});
+
+//add click event on clear highscores to delete them
+clearBtn.addEventListener("click", function(){
+    console.log(hsListEl);
+    //check if hsListEl has items, if it does continue to delete
+    if(hsListEl !== null){
+        //while loop to delete all items
+        while(hsListEl.lastElementChild){
+            //delete all children
+            hsListEl.removeChild(hsListEl.lastElementChild);
+        }
+        //deletes the users key from local storage and erases highscores
+        localStorage.removeItem("users");
+    }
+    //if no items then exit function
+    else {
+        return;
+    }
 });
