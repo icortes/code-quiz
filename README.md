@@ -1,37 +1,84 @@
 # 04 Web APIs: Code Quiz
 
-One paragraph of project description goes here.
+This app will test your knowledge of Javascript. When you click start button, the challenge will begin. There is a timer that will count down from sixty seconds. For every selected answer that is wrong the time is subtracted by ten seconds and a penalty of five points to your total score. There are a total of ten questions, once you are done or the timer gets to zero, you will be given your total score. You are given the opportunity to save your score with your initials. Once you save you will be taken to the scoreboard where your scores will kept in the local storage. You can also clear the list which will delete all the scores in the scoreboard forever. You can also access the scoreboard on the top left in the start screen.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+[Click Here To Visit The Page](https://icortes.github.io/code-quiz/)
 
 ### Prerequisites
-
-What things you need to install the software and how to install them.
-
-```
-Give examples
-```
-
+* Must have a web browser.
 ### Installing
+* No installation required.
 
-A step by step series of examples that tell you how to get a development environment running.
+### Mock-Up
+The following animation demonstrates the app functionality:
+![gif example of webpage](assets/img/example.gif)
 
-Say what the step will be:
+### Code Snippet
+The following code is commented line by line and handles the deletion of the scoreboard:
 
-```
-Give the example
-```
+    //get highscore list
+    var hsListEl = document.getElementById("hs-list");
+    //get go back button element
+    var goBack = document.getElementById("go-back");
+    //get clear highscores element
+    var clearBtn = document.getElementById("clear-hs");
 
-And repeat
+    //function to show highscores
+    function showHighScores() {
+        //clear hsListEl
+        hsListEl.innerHTML = "";
+        //get list of users from local storage
+        var users = JSON.parse(localStorage.getItem("users"));
+        //if users has content inside
+        if (users !== null) {
+            //for loop to append items in users to hs-list
+            for (var i = 0; i < users.length; i++) {
+                //grab item in users by index of loop
+                var item = users[i];
+                console.log(item);
+                //create li element
+                var li = document.createElement("li");
+                //add text to li element
+                li.textContent = item.init + " scored " + item.scr;
+                console.log(li);
+                //append li to hsListEl
+                hsListEl.appendChild(li);
+            }
+        }
+        //if users doesn't have items exit function
+        else {
+            return;
+        }
+    }
 
-```
-until finished
-```
+    showHighScores();
 
-End with an example of getting some data out of the system or using it for a little demo.
+    //add click event listener to go back button
+    goBack.addEventListener("click", function () {
+        //goes back to previous page
+        window.history.back();
+    });
 
+    //add click event on clear highscores to delete them
+    clearBtn.addEventListener("click", function () {
+        console.log(hsListEl);
+        //check if hsListEl has items, if it does continue to delete
+        if (hsListEl !== null) {
+            //while loop to delete all items
+            while (hsListEl.lastElementChild) {
+                //delete all children
+                hsListEl.removeChild(hsListEl.lastElementChild);
+            }
+            //deletes the users key from local storage and erases highscores
+            localStorage.removeItem("users");
+        }
+        //if no items then exit function
+        else {
+            return;
+        }
+    });
 
 ## Built With
 
@@ -41,18 +88,16 @@ End with an example of getting some data out of the system or using it for a lit
 
 ## Deployed Link
 
-* [See Live Site](#)
+* [See Live Site](https://icortes.github.io/code-quiz/)
 
 
 ## Authors
 
-* **YOUR NAME** 
+* **Isaac Cortes Hernandez** 
 
-- [Link to Portfolio Site](#)
-- [Link to Github](https://github.com/)
-- [Link to LinkedIn](https://www.linkedin.com/)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+- [Link to Portfolio Site](https://icortes.github.io/my-first-portfolio/)
+- [Link to Github](https://github.com/icortes)
+- [Link to LinkedIn](https://www.linkedin.com/in/cortes-isaac)
 
 ## License
 
@@ -60,6 +105,6 @@ This project is licensed under the MIT License
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code, libraries, packages, or UI was used  / inspired from
-* Inspiration
-* etc
+* w3schools.com
+* developer.mozilla.org
+* css-tricks.com
